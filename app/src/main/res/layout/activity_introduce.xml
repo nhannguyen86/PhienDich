@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="vn.nhan.phiendich.IntroduceActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/main_border"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:text="KTCMN"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_ktcmn"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="serif"
+                android:background="@drawable/introduce_left_selected"
+                android:onClick="selectTab"/>
+
+            <TextView
+                android:text="Kinh Phụng Vụ"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_kpv"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="serif"
+                android:background="@drawable/introduce_center_border"
+                android:onClick="selectTab"/>
+
+            <TextView
+                android:text="Bài đọc TL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_bdtl"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="serif"
+                android:onClick="selectTab"/>
+
+        </LinearLayout>
+
+        <WebView
+            android:text="Đang tải dữ liệu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/introduce_content"
+            android:fontFamily="serif"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

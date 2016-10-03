@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">KTCGK</string>
+    <string name="save"><u>Lưu trữ</u></string>
+    <string name="setting"><u>Cấu hình</u></string>
+    <string name="introduce"><u>Giới thiệu</u></string>
+    <string name="contribute"><u>Đóng góp</u></string>
+    <string name="reading">Bài Đọc Trong Thánh Lễ</string>
+    <string name="scheduler">Các Giờ Kinh Phụng Vụ</string>
+    <string name="nhom_phien_dich">Nhóm phiên dịch CGKPV</string>
+    <string name="kinh_thanh">Kinh Thánh</string>
+    <string name="ngay">Ngày&#160;%1$s</string>
+    <string name="contribute_online">Đóng góp trực tuyến</string>
+    <string name="contribute_transfer">Đóng góp bằng chuyển khoản</string>
+    <string name="contribute_online_des">Quý vị đang thanh toán trực tuyến số tiền đóng góp: <b>$ %1$d.00</b></string>
+    <string name="hello">Xin chào,&#160;</string>
+    <string name="login">Đăng nhập</string>
+    <string name="username"><u><b>%1$s</b></u></string>
+    <string name="login_forget_pass"><u>Quên mật khẩu</u></string>
+    <string name="login_register"><u>Đăng ký mới</u></string>
+    <string name="forget_notice">Vui lòng điền địa chỉ email bạn đã đăng ký. <br />Thông tin đăng nhập của bạn sẽ được chúng tôi gửi đến email này.</string>
+    <string name="forget_submit">Gửi mật khẩu</string>
+    <string name="hint_email">Địa chỉ email</string>
+    <string name="hint_username_email">Tên đăng nhập hoặc địa chỉ email</string>
+    <string name="hint_pass">Mật khẩu</string>
+    <string name="invalid_email">Địa chỉ email không đúng định dạng</string>
+    <string name="invalid_required">Thông tin bắt buộc</string>
+    <string name="invalid_pass2">Mật khẩu lần 2 không trùng khớp</string>
+    <string name="register_temps"><u>điều khoản của Hương Kinh</u></string>
+    <string name="title_temps">Điều khoản sử dụng</string>
+    <string name="register_accept">Tôi đã đọc, và đồng ý với mọi&#160;</string>
+    <string name="register_required_infor">Các thông tin bắt buộc</string>
+    <string name="hint_username">Tên đăng nhập</string>
+    <string name="hint_pass2">Mật khẩu (lần 2)</string>
+    <string name="hint_lastname">Họ và tên lót</string>
+    <string name="hint_firstname">Tên người dùng</string>
+    <string name="register_not_required_infor">Các thông tin khác (không bắt buộc)</string>
+    <string name="hint_phone">Số điện thoại</string>
+    <string name="hint_address">Địa chỉ</string>
+    <string name="hint_province">Tỉnh/Thành phố</string>
+    <string name="hint_state">Tiểu bang (nếu có)</string>
+    <string name="hint_zipcode">Mã vùng (nếu có)</string>
+    <string name="hint_national">Quốc gia</string>
+    <string name="register_submit">Đăng ký</string>
+    <string name="wating">Vui lòng chờ...</string>
+    <string name="mgs_logout">Bạn muốn đăng nhập bằng tài khoản khác?</string>
+    <string name="mgs_yes">Có</string>
+    <string name="mgs_no">Không</string>
+    <string name="mgs_exist">Bạn muốn thoát ứng dụng không?</string>
+    <string name="msg_request_login">"Vui lòng đăng nhập.&#160;"</string>
+    <string name="error_login">Lỗi khi đăng nhập: %1$s</string>
+    <string-array name="contribute_type">
+        <item>$ 15.00</item>
+        <item>$ 25.00</item>
+        <item>Tùy hảo tâm (Cao hơn mức đóng góp)</item>
+    </string-array>
+    <string-array name="register_genders">
+        <item>Giới tính</item>
+        <item>Nam</item>
+        <item>Nữ</item>
+    </string-array>
+    <string-array name="register_ages">
+        <item>Độ tuổi</item>
+        <item>Dưới 18 tuổi</item>
+        <item>18 &#8211; 35 tuổi</item>
+        <item>35 &#8211; 50 tuổi</item>
+        <item>Trên 50 tuổi</item>
+    </string-array>
+    <string-array name="register_jobs">
+        <item>Nghề nghiệp</item>
+        <item>Học sinh &#8211; Sinh viên</item>
+        <item>Giáo viên &#8211; Giáo lý viên</item>
+        <item>Giáo dục</item>
+        <item>Linh mục</item>
+        <item>Giáo dân</item>
+        <item>Công dân</item>
+        <item>Nghiên cứu</item>
+    </string-array>
+    <string-array name="register_majors">
+        <item>Lĩnh vực</item>
+        <item>Kinh thánh học hỏi, chú giải</item>
+        <item>Kinh thánh trong Phụng Vụ</item>
+        <item>Kinh thánh trong cuộc sống</item>
+    </string-array>
+</resources>

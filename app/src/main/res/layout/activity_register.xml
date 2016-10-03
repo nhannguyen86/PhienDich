@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="vn.nhan.phiendich.RegisterActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="@string/register_required_infor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/main_border"
+                android:padding="5dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/register_username"
+                    android:hint="@string/hint_username"
+                    android:fontFamily="serif" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/register_email"
+                    android:hint="@string/hint_email"
+                    android:fontFamily="serif" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:id="@+id/register_pass"
+                    android:hint="@string/hint_pass"
+                    android:fontFamily="serif" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:id="@+id/register_pass2"
+                    android:hint="@string/hint_pass2"
+                    android:fontFamily="serif" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/register_lastname"
+                    android:hint="@string/hint_lastname"
+                    android:fontFamily="serif" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/register_firstname"
+                    android:hint="@string/hint_firstname"
+                    android:fontFamily="serif" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/register_phone"
+                    android:hint="@string/hint_phone"
+                    android:fontFamily="serif" />
+
+            </LinearLayout>
+
+            <TextView
+                android:text="@string/register_not_required_infor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:layout_marginTop="20dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/main_border"
+                android:padding="5dp">
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/register_gender"
+                    android:entries="@array/register_genders"
+                    android:fontFamily="serif"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/register_age"
+                    android:entries="@array/register_ages"
+                    android:fontFamily="serif"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/register_job"
+                    android:entries="@array/register_jobs"
+                    android:fontFamily="serif"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/register_major"
+                    android:entries="@array/register_majors"
+                    android:fontFamily="serif"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/register_address"
+                    android:hint="@string/hint_address"
+                    android:fontFamily="serif" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/register_province"
+                    android:hint="@string/hint_province"
+                    android:fontFamily="serif" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/register_state"
+                    android:hint="@string/hint_state"
+                    android:fontFamily="serif" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/register_zipcode"
+                    android:hint="@string/hint_zipcode"
+                    android:fontFamily="serif" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/register_national"
+                    android:hint="@string/hint_national"
+                    android:fontFamily="serif" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_accept"
+                    android:fontFamily="serif"
+                    android:onClick="accept"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/register_temps"
+                    android:text="@string/register_temps"
+                    android:fontFamily="serif"
+                    android:onClick="goToTemps"/>
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/register_submit"
+                android:enabled="false"
+                android:text="@string/register_submit"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:layout_marginLeft="60px"
+                android:layout_marginRight="60px"
+                android:onClick="submit"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

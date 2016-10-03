@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/bg"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10px"
+        android:layout_marginLeft="10px"
+        android:layout_marginRight="10px"
+        android:layout_marginTop="10px">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ngay"
+            android:textAlignment="viewEnd"
+            android:id="@+id/tvDate"
+            android:textSize="18sp"
+            android:layout_marginBottom="30px"
+            android:layout_marginTop="20px" />
+
+        <TextView
+            android:text="@string/kinh_thanh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="36sp"
+            android:textStyle="normal|bold"
+            android:textAlignment="viewEnd"
+            android:layout_marginBottom="20px"
+            android:fontFamily="serif" />
+
+        <TextView
+            android:text="@string/scheduler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textAlignment="viewEnd"
+            android:paddingBottom="20px"
+            android:fontFamily="serif" />
+
+        <TextView
+            android:text="@string/nhom_phien_dich"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="normal|italic"
+            android:textAlignment="viewEnd"
+            android:fontFamily="serif" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignEnd="@+id/linearLayout2">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignParentBottom="true">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/main_border">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@drawable/main_border_bottom">
+
+                            <TextView
+                                android:text="@string/scheduler"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:id="@+id/phungVu"
+                                android:fontFamily="serif"
+                                android:layout_marginLeft="4dp"
+                                android:gravity="left|center"
+                                android:onClick="goToScheduler"/>
+
+                            <TextView
+                                android:text="@string/save"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/savePhungVu"
+                                android:layout_weight="1"
+                                android:fontFamily="serif"
+                                android:paddingRight="4dp"
+                                android:gravity="right|center"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:text="@string/reading"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:id="@+id/baiDoc"
+                                android:fontFamily="serif"
+                                android:layout_marginLeft="4dp"
+                                android:gravity="left|center"/>
+
+                            <TextView
+                                android:text="@string/save"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/saveBaiDoc"
+                                android:layout_weight="1"
+                                android:fontFamily="serif"
+                                android:layout_marginRight="4dp"
+                                android:gravity="right|center"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp">
+
+                    <TextView
+                        android:text="@string/setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/tvSetting"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:onClick="goToSetting"/>
+
+                    <TextView
+                        android:text="@string/introduce"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/tvIntroduce"
+                        android:gravity="center"
+                        android:onClick="goToIntroduce"/>
+
+                    <TextView
+                        android:text="@string/contribute"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/tvContribute"
+                        android:gravity="center"
+                        android:onClick="goToContribute"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:text="@string/hello"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/tvGreeting"
+                        android:gravity="right|center"/>
+
+                    <TextView
+                        android:text="@string/login"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/tvUsername"
+                        android:gravity="left|center"
+                        android:textStyle="normal|bold"
+                        android:onClick="goToLogin"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
