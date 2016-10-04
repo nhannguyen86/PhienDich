@@ -66,13 +66,13 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="190dp"
                 android:layout_alignParentBottom="true">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp">
+                    android:layout_height="100dp">
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -83,7 +83,7 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="50dp"
                             android:background="@drawable/main_border_bottom">
 
                             <TextView
@@ -93,6 +93,7 @@
                                 android:layout_weight="1"
                                 android:id="@+id/phungVu"
                                 android:fontFamily="serif"
+                                android:textSize="18dp"
                                 android:layout_marginLeft="4dp"
                                 android:gravity="left|center"
                                 android:onClick="goToScheduler"/>
@@ -104,6 +105,7 @@
                                 android:id="@+id/savePhungVu"
                                 android:layout_weight="1"
                                 android:fontFamily="serif"
+                                android:textSize="18dp"
                                 android:paddingRight="4dp"
                                 android:gravity="right|center"/>
 
@@ -121,8 +123,10 @@
                                 android:layout_weight="1"
                                 android:id="@+id/baiDoc"
                                 android:fontFamily="serif"
+                                android:textSize="18dp"
                                 android:layout_marginLeft="4dp"
-                                android:gravity="left|center"/>
+                                android:gravity="left|center"
+                                android:onClick="goToScheduler"/>
 
                             <TextView
                                 android:text="@string/save"
@@ -131,6 +135,7 @@
                                 android:id="@+id/saveBaiDoc"
                                 android:layout_weight="1"
                                 android:fontFamily="serif"
+                                android:textSize="18dp"
                                 android:layout_marginRight="4dp"
                                 android:gravity="right|center"/>
 
@@ -142,7 +147,7 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp">
+                    android:layout_height="45dp">
 
                     <TextView
                         android:text="@string/setting"

@@ -112,4 +112,12 @@ public class Utils {
         }
         return schedulerDf.format(date);
     }
+
+    private static SimpleDateFormat titleDf = new SimpleDateFormat("EEE, dd/MM");
+    public static String formatTitleDate(Date date) {
+        if (date == null) {
+            return null;
+        }
+        return titleDf.format(date);
+    }
 }

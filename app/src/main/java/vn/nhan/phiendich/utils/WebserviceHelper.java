@@ -40,6 +40,7 @@ public class WebserviceHelper {
     private static final String NONCE = HOST + "api/get_nonce/?controller=user&method=register";
     private static final String REGISTER = HOST + "api/user/register/";
     private static final String SCHEDULER = HOST + "api/ktcgk/get_gkpv/";
+    private static final String READING = HOST + "api/ktcgk/get_bdtl/";
 
     private static final String TAG = WebserviceHelper.class.getName();
     private static final Gson GS = new Gson();
@@ -145,8 +146,12 @@ public class WebserviceHelper {
                 MessageModel.class);
     }
 
-    public static SchedulerModel getScheduler(Date date) {
-        return parseData(SCHEDULER, new String[][]{
+    public static SchedulerModel getScheduler(Date date, boolean isScheduler) {
+        return parseData(
+                isScheduler ?
+                        SCHEDULER :
+                        READING,
+                new String[][]{
                         new String[] {"date", Utils.formatSchedulerDate(date)} },
                 SchedulerModel.class);
     }

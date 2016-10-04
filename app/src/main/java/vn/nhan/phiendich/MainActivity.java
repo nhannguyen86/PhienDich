@@ -41,6 +41,7 @@ public class MainActivity extends Activity {
     }
 
     public void goToScheduler(View view) {
+        SchedulerActivity.selectScheduler(view.getId() == R.id.phungVu);
         Intent i = new Intent(this, SchedulerActivity.class);
         startActivity(i);
     }
