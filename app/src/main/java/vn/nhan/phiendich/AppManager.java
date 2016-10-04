@@ -55,7 +55,14 @@ public class AppManager {
     }
 
     public static void logout() {
+        if (sharedPreferencesActive == null || !loginSuccess()) {
+            return;
+        }
         authenModel = null;
+        SharedPreferences sharedPref = sharedPreferencesActive.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove(AUTHENTICATION);
+        editor.commit();
     }
 
     public static void saveLogin() {

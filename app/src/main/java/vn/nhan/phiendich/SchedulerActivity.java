@@ -1,5 +1,6 @@
 package vn.nhan.phiendich;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import vn.nhan.phiendich.model.Detail;
 import vn.nhan.phiendich.model.Scheduler;
 import vn.nhan.phiendich.model.SchedulerModel;
 import vn.nhan.phiendich.utils.Utils;
@@ -110,10 +112,13 @@ public class SchedulerActivity extends BaseActive {
                     if (j == sch.details.length - 1) {
                         view.setBackground(null);
                     }
+                    final Detail m = sch.details[j];
                     tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            
+                            DetailActivity.setModel(m);
+                            Intent i = new Intent(SchedulerActivity.this, DetailActivity.class);
+                            startActivity(i);
                         }
                     });
                 }
@@ -122,10 +127,10 @@ public class SchedulerActivity extends BaseActive {
             TextView title = new TextView(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams.MATCH_PARENT);
             title.setText("Chưa có dữ liệu cho ngày này.");
             title.setLayoutParams(params);
-            title.setTextSize(18);
+            title.setTextSize(20);
             title.setGravity(Gravity.CENTER);
             layout.addView(title);
         }

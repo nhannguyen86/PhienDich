@@ -63,7 +63,7 @@ public class ForgetPassActivity extends BaseActive {
                     } else {
                         status.setText("");
                         AlertDialog.Builder builder = new AlertDialog.Builder(ForgetPassActivity.this);
-                        builder.setMessage(model.mgs).setCancelable(false)
+                        builder.setMessage(model.msg).setCancelable(false)
                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
 

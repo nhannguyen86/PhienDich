@@ -5,5 +5,5 @@ package vn.nhan.phiendich.model;
  */
 
 public class MessageModel extends BaseModel {
-    public String mgs;
+    public String msg;
 }

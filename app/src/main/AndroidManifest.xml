@@ -47,7 +47,8 @@
         <activity
             android:name=".TempsActivity"
             android:label="@string/title_temps" />
-        <activity android:name=".SchedulerActivity"></activity>
+        <activity android:name=".SchedulerActivity" />
+        <activity android:name=".DetailActivity"></activity>
     </application>
 
 </manifest>

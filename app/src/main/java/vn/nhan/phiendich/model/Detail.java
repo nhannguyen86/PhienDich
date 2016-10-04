@@ -10,7 +10,7 @@ public class Detail {
     public String content;
     public String title;
     public String typename;
-    @SerializedName("audio_name")
+    @SerializedName("audio_file")
     public String audioFile;
     @SerializedName("audio_length")
     public String audioLength;

@@ -212,7 +212,7 @@ public class RegisterActivity extends BaseActive {
                             }
                         });
                     } else {
-                        builder.setMessage(model.mgs).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        builder.setMessage(model.msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Intent i = new Intent(RegisterActivity.this, MainActivity.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
