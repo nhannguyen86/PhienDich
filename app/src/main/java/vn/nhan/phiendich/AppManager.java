@@ -3,6 +3,7 @@ package vn.nhan.phiendich;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.telephony.TelephonyManager;
 
 import com.google.gson.Gson;
 
@@ -21,6 +22,8 @@ public class AppManager {
     private static final Gson GS = new Gson();
     public static Activity sharedPreferencesActive;
     public static AuthenticationModel authenModel;
+    public static String IMEI;
+    public static int ONLINE_COUNT;
 
 
     public static Date selectedDate = new Date();
@@ -48,6 +51,9 @@ public class AppManager {
         if (auth != null) {
             authenModel = GS.fromJson(auth, AuthenticationModel.class);
         }
+        TelephonyManager mTelephonyMgr = (TelephonyManager) activity
+                .getSystemService(Context.TELEPHONY_SERVICE);
+        IMEI = mTelephonyMgr.getDeviceId();
     }
 
     public static boolean loginSuccess() {

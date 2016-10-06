@@ -4,8 +4,9 @@
     <string name="setting"><u>Cấu hình</u></string>
     <string name="introduce"><u>Giới thiệu</u></string>
     <string name="contribute"><u>Đóng góp</u></string>
-    <string name="reading">Bài Đọc Trong Thánh Lễ</string>
-    <string name="scheduler">Các Giờ Kinh Phụng Vụ</string>
+    <string name="reading"><u>Bài Đọc Trong Thánh Lễ</u></string>
+    <string name="scheduler"><u>Các Giờ Kinh Phụng Vụ</u></string>
+    <string name="scheduler_h">Các Giờ Kinh Phụng Vụ</string>
     <string name="nhom_phien_dich">Nhóm phiên dịch CGKPV</string>
     <string name="kinh_thanh">Kinh Thánh</string>
     <string name="ngay">Ngày&#160;%1$s</string>

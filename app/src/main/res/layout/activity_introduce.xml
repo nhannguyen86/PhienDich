@@ -25,7 +25,7 @@
             android:layout_marginBottom="30dp">
 
             <TextView
-                android:text="KTCMN"
+                android:text="KTCGK"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/tv_ktcmn"

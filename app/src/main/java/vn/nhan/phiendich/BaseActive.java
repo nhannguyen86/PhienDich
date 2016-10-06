@@ -50,9 +50,11 @@ public class BaseActive extends AppCompatActivity {
 
     protected void showLoading(boolean visible) {
         if (visible) {
-            loading = new ProgressDialog(this);
-            loading.setTitle(getString(R.string.wating));
-            loading.setCancelable(false);
+            if (loading == null || !loading.isShowing()) {
+                loading = new ProgressDialog(this);
+                loading.setTitle(getString(R.string.wating));
+                loading.setCancelable(false);
+            }
             loading.show();
         } else {
             loading.dismiss();

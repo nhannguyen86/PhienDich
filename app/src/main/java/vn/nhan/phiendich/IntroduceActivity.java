@@ -12,6 +12,7 @@ import vn.nhan.phiendich.utils.WebserviceHelper;
 public class IntroduceActivity extends BaseActive {
 
     private WebView content;
+    private View ktcmn,kpv,bdtl;
     private static MultiContentModel contentModel;
 
     @Override
@@ -21,6 +22,19 @@ public class IntroduceActivity extends BaseActive {
 
         content = (WebView) findViewById(R.id.introduce_content);
         content.setBackgroundColor(Color.TRANSPARENT);
+
+        ktcmn = findViewById(R.id.tv_ktcmn);
+        kpv = findViewById(R.id.tv_kpv);
+        bdtl = findViewById(R.id.tv_bdtl);
+        View.OnClickListener onClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTab(v);
+            }
+        };
+        ktcmn.setOnClickListener(onClick);
+        kpv.setOnClickListener(onClick);
+        bdtl.setOnClickListener(onClick);
 
         setContent(0);
     }
@@ -54,7 +68,7 @@ public class IntroduceActivity extends BaseActive {
 
     private void setContent(int index) {
         if (contentModel != null && contentModel.data != null && contentModel.data.length > index) {
-            String c = String.format("<div align=justify>%s</div>", contentModel.data[index].content);
+            String c = String.format("<div>%s</div>", contentModel.data[index].content);
             content.loadData(c, "text/html; charset=utf-8", "UTF-8");
             content.loadData(c, "text/html; charset=utf-8", "UTF-8");
         }
@@ -81,8 +95,8 @@ public class IntroduceActivity extends BaseActive {
     }
 
     private void resetTabBackground() {
-        findViewById(R.id.tv_ktcmn).setBackgroundColor(Color.TRANSPARENT);
-        findViewById(R.id.tv_kpv).setBackgroundResource(R.drawable.introduce_center_border);
-        findViewById(R.id.tv_bdtl).setBackgroundColor(Color.TRANSPARENT);
+        ktcmn.setBackgroundColor(Color.TRANSPARENT);
+        kpv.setBackgroundResource(R.drawable.introduce_center_border);
+        bdtl.setBackgroundColor(Color.TRANSPARENT);
     }
 }

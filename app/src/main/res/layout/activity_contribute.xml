@@ -38,7 +38,8 @@
             android:id="@+id/onlineContribute"
             android:fontFamily="serif"
             android:gravity="center"
-            android:onClick="goToOnlineContribute"/>
+            android:onClick="goToOnlineContribute"
+            android:textAllCaps="false" />
 
         <Button
             android:text="@string/contribute_transfer"
@@ -47,7 +48,8 @@
             android:id="@+id/transferContribute"
             android:fontFamily="serif"
             android:gravity="center"
-            android:onClick="goToTransferContribute"/>
+            android:onClick="goToTransferContribute"
+            android:textAllCaps="false" />
     </LinearLayout>
 
 </RelativeLayout>

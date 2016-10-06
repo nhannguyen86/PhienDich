@@ -23,6 +23,7 @@ import vn.nhan.phiendich.model.BaseModel;
 import vn.nhan.phiendich.model.MessageModel;
 import vn.nhan.phiendich.model.MultiContentModel;
 import vn.nhan.phiendich.model.NonceModel;
+import vn.nhan.phiendich.model.OnlineModel;
 import vn.nhan.phiendich.model.SchedulerModel;
 
 
@@ -41,6 +42,8 @@ public class WebserviceHelper {
     private static final String REGISTER = HOST + "api/user/register/";
     private static final String SCHEDULER = HOST + "api/ktcgk/get_gkpv/";
     private static final String READING = HOST + "api/ktcgk/get_bdtl/";
+    private static final String ONLINE = HOST + "api/user/get_count_user_online/";
+    private static final String OFFLINE = HOST + "api/user/notify_off/";
 
     private static final String TAG = WebserviceHelper.class.getName();
     private static final Gson GS = new Gson();
@@ -101,7 +104,7 @@ public class WebserviceHelper {
         }
         try {
             BaseModel re = GS.fromJson(str, classOfT);
-            if (re.status.equals(BaseModel.STATUS_ERROR)) {
+            if (re.error != null) {
                 Utils.makeText(re.error);
             }
             return (T) re;
@@ -154,6 +157,23 @@ public class WebserviceHelper {
                 new String[][]{
                         new String[] {"date", Utils.formatSchedulerDate(date)} },
                 SchedulerModel.class);
+    }
+
+    public static OnlineModel online(String imei) {
+        if (imei == null) {
+            return null;
+        }
+        return parseData(ONLINE, new String[][]{
+                        new String[] {"imei", imei} },
+                OnlineModel.class);
+    }
+    public static BaseModel offline(String imei) {
+        if (imei == null) {
+            return null;
+        }
+        return parseData(OFFLINE, new String[][]{
+                        new String[] {"imei", imei} },
+                BaseModel.class);
     }
 
 }
