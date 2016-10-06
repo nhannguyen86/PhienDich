@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -48,7 +49,16 @@
             android:name=".TempsActivity"
             android:label="@string/title_temps" />
         <activity android:name=".SchedulerActivity" />
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".DetailActivity" />
+
+        <service
+            android:name=".service.StatusService"
+            android:exported="false" />
+
+        <receiver
+            android:name=".service.StatusReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
     </application>
 
 </manifest>

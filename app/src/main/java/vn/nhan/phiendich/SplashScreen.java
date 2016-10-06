@@ -1,9 +1,14 @@
 package vn.nhan.phiendich;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import vn.nhan.phiendich.service.StatusReceiver;
 
 public class SplashScreen extends Activity {
 
@@ -16,6 +21,8 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.activity_splash_screen);
 
         AppManager.initData(this);
+
+        scheduleStatus();
 
         new Handler().postDelayed(new Runnable() {
 
@@ -35,5 +42,16 @@ public class SplashScreen extends Activity {
                 finish();
             }
         }, SPLASH_TIME_OUT);
+    }
+
+    private void scheduleStatus() {
+        // Construct an intent that will execute the AlarmReceiver
+        Intent intent = new Intent(getApplicationContext(), StatusReceiver.class);
+        // Create a PendingIntent to be triggered when the alarm goes off
+        final PendingIntent pIntent = PendingIntent.getBroadcast(this, StatusReceiver.REQUEST_CODE,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+                StatusReceiver.INTERVAL_STATUS, pIntent);
     }
 }

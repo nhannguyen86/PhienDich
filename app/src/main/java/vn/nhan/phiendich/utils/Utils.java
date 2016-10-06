@@ -107,11 +107,11 @@ public class Utils {
 
     private static SimpleDateFormat schedulerDf = new SimpleDateFormat("yyyy-MM-dd");
     public static String formatSchedulerDate(Date date) {
-        /*if (date == null) {
+        if (date == null) {
             return null;
         }
-        return schedulerDf.format(date);*/
-        return "2016-08-20";
+        return schedulerDf.format(date);
+//        return "2016-08-20";
     }
 
     private static SimpleDateFormat titleDf = new SimpleDateFormat("EEE, dd/MM");

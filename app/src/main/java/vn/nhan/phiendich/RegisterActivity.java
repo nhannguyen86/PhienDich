@@ -83,8 +83,7 @@ public class RegisterActivity extends BaseActive {
     }
 
     public void goToTemps(View view) {
-        Intent i = new Intent(this, TempsActivity.class);
-        startActivity(i);
+        startActivitySafe(TempsActivity.class);
     }
 
     public void submit(View view) {

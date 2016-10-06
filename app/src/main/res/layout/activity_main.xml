@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:src="@drawable/bg"/>
 
     <LinearLayout
@@ -21,10 +21,10 @@
         android:layout_marginTop="10px">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ngay"
-            android:textAlignment="viewEnd"
+            android:layout_gravity="end"
             android:id="@+id/tvDate"
             android:textSize="18sp"
             android:layout_marginBottom="30px"
@@ -32,36 +32,36 @@
 
         <TextView
             android:text="@string/kinh_thanh"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="36sp"
             android:textStyle="normal|bold"
-            android:textAlignment="viewEnd"
+            android:layout_gravity="end"
             android:layout_marginBottom="20px"
             android:fontFamily="serif" />
 
         <TextView
-            android:text="@string/scheduler"
-            android:layout_width="match_parent"
+            android:text="@string/scheduler_h"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textAlignment="viewEnd"
+            android:layout_gravity="end"
             android:paddingBottom="20px"
             android:fontFamily="serif" />
 
         <TextView
             android:text="@string/nhom_phien_dich"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textStyle="normal|italic"
-            android:textAlignment="viewEnd"
+            android:layout_gravity="end"
             android:fontFamily="serif" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignEnd="@+id/linearLayout2">
+            android:layout_alignRight="@+id/linearLayout2">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -90,12 +90,12 @@
                                 android:text="@string/scheduler"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
                                 android:id="@+id/phungVu"
                                 android:fontFamily="serif"
                                 android:textSize="18dp"
                                 android:layout_marginLeft="4dp"
-                                android:gravity="left|center"
+                                android:gravity="left|center_vertical"
+                                android:layout_weight="1"
                                 android:onClick="goToScheduler"/>
 
                             <TextView
@@ -103,11 +103,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/savePhungVu"
-                                android:layout_weight="1"
                                 android:fontFamily="serif"
                                 android:textSize="18dp"
                                 android:paddingRight="4dp"
-                                android:gravity="right|center"/>
+                                android:layout_weight="3"
+                                android:gravity="right|center_vertical"
+                                android:layout_gravity="center_vertical|right"/>
 
                         </LinearLayout>
 
@@ -120,12 +121,12 @@
                                 android:text="@string/reading"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
                                 android:id="@+id/baiDoc"
                                 android:fontFamily="serif"
                                 android:textSize="18dp"
                                 android:layout_marginLeft="4dp"
-                                android:gravity="left|center"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
                                 android:onClick="goToScheduler"/>
 
                             <TextView
@@ -133,11 +134,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/saveBaiDoc"
-                                android:layout_weight="1"
                                 android:fontFamily="serif"
                                 android:textSize="18dp"
                                 android:layout_marginRight="4dp"
-                                android:gravity="right|center"/>
+                                android:layout_weight="3"
+                                android:gravity="right|center"
+                                android:layout_gravity="center_vertical|right"/>
 
                         </LinearLayout>
 
@@ -179,12 +181,13 @@
                 </LinearLayout>
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
 
                     <TextView
                         android:text="@string/hello"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:id="@+id/tvGreeting"
@@ -192,7 +195,7 @@
 
                     <TextView
                         android:text="@string/login"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:id="@+id/tvUsername"

@@ -1,24 +1,31 @@
 package vn.nhan.phiendich;
 
-import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.Date;
 
+import vn.nhan.phiendich.model.BaseModel;
+import vn.nhan.phiendich.service.StatusReceiver;
 import vn.nhan.phiendich.utils.Utils;
+import vn.nhan.phiendich.utils.WebserviceHelper;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActive {
 
     public static final int LOGIN = 99;
     private TextView tvDate, greeting, username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setActionBarVisible(false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -26,6 +33,44 @@ public class MainActivity extends Activity {
         greeting = (TextView) findViewById(R.id.tvGreeting);
         username = (TextView) findViewById(R.id.tvUsername);
         tvDate.setText( getString( R.string.ngay, Utils.formatDate(new Date()) ) );
+
+        findViewById(R.id.phungVu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToScheduler(v);
+            }
+        });
+        findViewById(R.id.baiDoc).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToScheduler(v);
+            }
+        });
+        findViewById(R.id.tvSetting).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSetting(v);
+            }
+        });
+        findViewById(R.id.tvIntroduce).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToIntroduce(v);
+            }
+        });
+        findViewById(R.id.tvContribute).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToContribute(v);
+            }
+        });
+        findViewById(R.id.tvUsername).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToLogin(v);
+            }
+        });
+
 
         checkLogin();
     }
@@ -42,23 +87,19 @@ public class MainActivity extends Activity {
 
     public void goToScheduler(View view) {
         SchedulerActivity.selectScheduler(view.getId() == R.id.phungVu);
-        Intent i = new Intent(this, SchedulerActivity.class);
-        startActivity(i);
+        startActivitySafe(SchedulerActivity.class);
     }
 
     public void goToSetting(View v) {
-        Intent i = new Intent(this, SettingActivity.class);
-        startActivity(i);
+        startActivitySafe(SettingActivity.class);
     }
 
     public void goToIntroduce(View v) {
-        Intent i = new Intent(this, IntroduceActivity.class);
-        startActivity(i);
+        startActivitySafe(IntroduceActivity.class);
     }
 
     public void goToContribute(View v) {
-        Intent i = new Intent(this, ContributeActivity.class);
-        startActivity(i);
+        startActivitySafe(ContributeActivity.class);
     }
 
     public void goToLogin(View v) {
@@ -78,8 +119,7 @@ public class MainActivity extends Activity {
             AlertDialog alert = builder.create();
             alert.show();
         } else {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivityForResult(i, LOGIN);
+            startActivityForResultSafe(LoginActivity.class, LOGIN);
         }
     }
 
@@ -101,7 +141,26 @@ public class MainActivity extends Activity {
         builder.setMessage(R.string.mgs_exist).setCancelable(false)
                 .setPositiveButton(R.string.mgs_yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        System.exit(0);
+                        new AsyncTask<Void, Void, BaseModel> () {
+                            @Override
+                            protected void onPreExecute() {
+                                super.onPreExecute();
+                                finish();
+                            }
+
+                            @Override
+                            protected BaseModel doInBackground(Void... params) {
+                                BaseModel model = WebserviceHelper.offline(AppManager.IMEI);
+                                return model;
+                            }
+
+                            @Override
+                            protected void onPostExecute(BaseModel model) {
+                                super.onPostExecute(model);
+                                cancelStatus();
+                                System.exit(0);
+                            }
+                        }.execute();
                     }
                 }).setNegativeButton(R.string.mgs_no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -110,5 +169,15 @@ public class MainActivity extends Activity {
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void cancelStatus() {
+        // Construct an intent that will execute the AlarmReceiver
+        Intent intent = new Intent(getApplicationContext(), StatusReceiver.class);
+        // Create a PendingIntent to be triggered when the alarm goes off
+        final PendingIntent pIntent = PendingIntent.getBroadcast(this, StatusReceiver.REQUEST_CODE,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        alarm.cancel(pIntent);
     }
 }

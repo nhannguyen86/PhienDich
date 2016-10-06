@@ -6,9 +6,9 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -22,10 +22,11 @@ import vn.nhan.phiendich.utils.Utils;
 public class DetailActivity extends BaseActive {
 
     private LinearLayout audioPanel;
-    private WebView content;
+    private CustomWebView content;
     private MediaPlayer mediaPlayer;
     private double startTime = 0;
     private double finalTime = 0;
+    private int scrollSpeed = 200;
     private Handler handler = new Handler();
     private ImageButton barPlay, scroll, play, replay, stop;
     private TextView playText, timer;
@@ -34,6 +35,9 @@ public class DetailActivity extends BaseActive {
     private boolean playing, scrolling = true;
 
     private static Detail model;
+
+    private double step;
+    private int scrollRangeHeight;
 
     public static void setModel(Detail model) {
         DetailActivity.model = model;
@@ -45,7 +49,7 @@ public class DetailActivity extends BaseActive {
         setContentView(R.layout.activity_detail);
 
         audioPanel = (LinearLayout) findViewById(R.id.audio_panel);
-        content = (WebView) findViewById(R.id.content);
+        content = (CustomWebView) findViewById(R.id.content);
         content.setBackgroundColor(Color.TRANSPARENT);
 
         seekBar = (SeekBar) findViewById(R.id.seek_bar);
@@ -58,10 +62,40 @@ public class DetailActivity extends BaseActive {
         timer = (TextView) findViewById(R.id.timer);
         stop.setEnabled(false);
         replay.setEnabled(false);
+        View.OnClickListener onClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                play(v);
+            }
+        };
+        barPlay.setOnClickListener(onClick);
+        findViewById(R.id.play_area).setOnClickListener(onClick);
+        findViewById(R.id.scroll_area).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scroll(v);
+            }
+        });
+        findViewById(R.id.replay_area).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replay(v);
+            }
+        });
+        findViewById(R.id.stop_area).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stop(v);
+            }
+        });
 
         if (model != null) {
             // set title
-            setTitle(model.typename + " - " + Utils.formatTitleDate(AppManager.selectedDate));
+            setTitle(
+                    Html.fromHtml(model.typename + " - " + Utils.formatTitleDate(AppManager.selectedDate)
+//                    + String.format("<br/><font style=\"font-size: 8px\">Hiện đang có %d người cầu nguyện</font>", AppManager.ONLINE_COUNT)
+                    )
+            );
 
             // set audio bar
             if (model.audioFile != null) {
@@ -102,6 +136,12 @@ public class DetailActivity extends BaseActive {
         try {
             mediaPlayer = MediaPlayer.create(this, Uri.parse(model.audioFile));
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    stop(stop);
+                }
+            });
         } catch (Exception e) {
             Utils.makeText(e.getMessage());
             Log.d(getClass().getName(), "initPlayMedia: " + e.getMessage(), e);
@@ -112,10 +152,10 @@ public class DetailActivity extends BaseActive {
         scrolling = !scrolling;
         if (scrolling) {
             scroll.setBackgroundResource(R.drawable.audio_scroll);
-
+            handler.postDelayed(webScroll, 100);
         } else {
             scroll.setBackgroundResource(R.drawable.audio_unscroll);
-
+            handler.removeCallbacks(webScroll);
         }
     }
 
@@ -134,7 +174,10 @@ public class DetailActivity extends BaseActive {
                         finalTime = Integer.parseInt(model.audioLength) * 1000;
                     }
                     seekBar.setMax((int) finalTime);
-                    handler.postDelayed(updateTime, 100);
+                }
+                handler.postDelayed(updateTime, 100);
+                if (scrolling) {
+                    handler.postDelayed(webScroll, 100);
                 }
             } catch (Exception e) {
                 Utils.makeText(e.getMessage());
@@ -147,6 +190,8 @@ public class DetailActivity extends BaseActive {
 
             try {
                 mediaPlayer.pause();
+                handler.removeCallbacks(updateTime);
+                handler.removeCallbacks(webScroll);
             } catch (Exception e) {
                 Utils.makeText(e.getMessage());
                 Log.d(getClass().getName(), "play pause: " + e.getMessage(), e);
@@ -176,8 +221,19 @@ public class DetailActivity extends BaseActive {
 
     private Runnable webScroll = new Runnable() {
         public void run() {
-            content.scrollBy(0, 20);
-            handler.postDelayed(this, 500);
+            if (scrollRangeHeight == 0) {
+                scrollRangeHeight = content.getScrollRangeHeight();
+            }
+            if (finalTime != 0 && content.getScrollY() + content.getContentHeight()/2 < scrollRangeHeight) {
+                if (step == 0) {
+                    step = ((scrollSpeed * (scrollRangeHeight - content.getContentHeight()/2)) / finalTime) + 0.5;
+                    if (step < 1) {
+                        step = 1;
+                    }
+                }
+                content.scrollBy(0, (int) step);
+            }
+            handler.postDelayed(this, scrollSpeed);
         }
     };
 
@@ -197,8 +253,8 @@ public class DetailActivity extends BaseActive {
         try {
             mediaPlayer.stop();
             handler.removeCallbacks(updateTime);
-            startTime = finalTime = 0;
-            seekBar.setProgress((int)startTime);
+            startTime  = 0;
+            seekBar.setProgress((int) startTime);
             initPlayMedia();
         } catch (Exception e) {
             Utils.makeText(e.getMessage());
@@ -210,7 +266,10 @@ public class DetailActivity extends BaseActive {
     public void finish() {
         super.finish();
         if (mediaPlayer != null) {
+            handler.removeCallbacks(updateTime);
+            handler.removeCallbacks(webScroll);
             mediaPlayer.stop();
+            mediaPlayer.release();
         }
     }
 }

@@ -73,12 +73,10 @@ public class LoginActivity extends BaseActive {
     }
 
     public void forgetPass(View view) {
-        Intent i = new Intent(this, ForgetPassActivity.class);
-        startActivity(i);
+        startActivitySafe(ForgetPassActivity.class);
     }
 
     public void register(View view) {
-        Intent i = new Intent(this, RegisterActivity.class);
-        startActivity(i);
+        startActivitySafe(RegisterActivity.class);
     }
 }

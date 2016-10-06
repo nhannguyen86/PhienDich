@@ -1,6 +1,5 @@
 package vn.nhan.phiendich;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,18 +51,16 @@ public class ContributeActivity extends BaseActive {
     protected void setContent(int index) {
         if (contentModel != null && contentModel.data != null && contentModel.data.length > index) {
             content.loadData(
-                    String.format("<div align=\"justify\">%s</div>", contentModel.data[index].content),
+                    String.format("<div>%s</div>", contentModel.data[index].content),
                     "text/html; charset=utf-8", "UTF-8");
         }
     }
 
     public void goToTransferContribute(View v) {
-        Intent i = new Intent(this, ContributeTransferActivity.class);
-        startActivity(i);
+        startActivitySafe(ContributeTransferActivity.class);
     }
 
     public void goToOnlineContribute(View v) {
-        Intent i = new Intent(this, ContributeOnlineActivity.class);
-        startActivity(i);
+        startActivitySafe(ContributeOnlineActivity.class);
     }
 }

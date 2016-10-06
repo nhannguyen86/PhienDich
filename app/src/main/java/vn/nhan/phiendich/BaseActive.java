@@ -3,6 +3,8 @@ package vn.nhan.phiendich;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
@@ -22,25 +24,32 @@ import android.widget.TextView;
 import java.lang.reflect.Field;
 import java.util.Calendar;
 
+import vn.nhan.phiendich.model.BaseModel;
+
 /**
  * Created by Nhan on 26/9/2016.
  */
 
 public class BaseActive extends AppCompatActivity {
-    private boolean menuChooseDateVisible;
+    private boolean menuChooseDateVisible, actionBarVisible = true;
     private ProgressDialog loading;
+    private boolean newActive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        if (actionBarVisible) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
 
-        try {
-            alignTitle(actionBar);
-        } catch (Exception e) {
-            Log.d(getClass().getName(), "Can't align title: " + e.getMessage());
+            try {
+                alignTitle(actionBar);
+            } catch (Exception e) {
+                Log.d(getClass().getName(), "Can't align title: " + e.getMessage());
+            }
+        } else {
+            actionBar.hide();
         }
     }
 
@@ -48,11 +57,17 @@ public class BaseActive extends AppCompatActivity {
         menuChooseDateVisible = visible;
     }
 
+    protected void setActionBarVisible(boolean visible) {
+        actionBarVisible = visible;
+    }
+
     protected void showLoading(boolean visible) {
         if (visible) {
-            loading = new ProgressDialog(this);
-            loading.setTitle(getString(R.string.wating));
-            loading.setCancelable(false);
+            if (loading == null || !loading.isShowing()) {
+                loading = new ProgressDialog(this);
+                loading.setTitle(getString(R.string.wating));
+                loading.setCancelable(false);
+            }
             loading.show();
         } else {
             loading.dismiss();
@@ -148,5 +163,61 @@ public class BaseActive extends AppCompatActivity {
 
     protected void onSelectedDate() {
 
+    }
+
+    protected void startActivitySafe(final Class<? extends BaseActive> type) {
+        if (newActive) {
+            return;
+        }
+        newActive = true;
+        new AsyncTask<Void, Void, BaseModel>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                showLoading(true);
+            }
+
+            @Override
+            protected BaseModel doInBackground(Void... params) {
+                Intent i = new Intent(BaseActive.this, type);
+                startActivity(i);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(BaseModel model) {
+                super.onPostExecute(model);
+                showLoading(false);
+                newActive = false;
+            }
+        }.execute();
+    }
+
+    protected void startActivityForResultSafe(final Class<? extends BaseActive> type, final int requestCode) {
+        if (newActive) {
+            return;
+        }
+        newActive = true;
+        new AsyncTask<Void, Void, BaseModel>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                showLoading(true);
+            }
+
+            @Override
+            protected BaseModel doInBackground(Void... params) {
+                Intent i = new Intent(BaseActive.this, type);
+                startActivityForResult(i, requestCode);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(BaseModel model) {
+                super.onPostExecute(model);
+                showLoading(false);
+                newActive = false;
+            }
+        }.execute();
     }
 }

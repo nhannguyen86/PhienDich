@@ -1,6 +1,5 @@
 package vn.nhan.phiendich;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +21,7 @@ public class SchedulerActivity extends BaseActive {
     private LayoutInflater mInflater;
     private static SchedulerModel schedulerModel;
     private static boolean isScheduler = false;
+    private boolean loading = false;// fixed bug of android 4.x
 
     public static void selectScheduler(boolean isScheduler) {
         if (SchedulerActivity.isScheduler != isScheduler) {
@@ -45,6 +45,10 @@ public class SchedulerActivity extends BaseActive {
     }
 
     private void loadLesions() {
+        if (loading) {
+            return;
+        }
+        loading = true;
         // load current scheduler
         new AsyncTask<Void, Void, SchedulerModel>() {
             @Override
@@ -67,6 +71,8 @@ public class SchedulerActivity extends BaseActive {
                 fillLesions();
 
                 showLoading(false);
+
+                loading = false;
             }
         }.execute();
     }
@@ -117,8 +123,7 @@ public class SchedulerActivity extends BaseActive {
                         @Override
                         public void onClick(View v) {
                             DetailActivity.setModel(m);
-                            Intent i = new Intent(SchedulerActivity.this, DetailActivity.class);
-                            startActivity(i);
+                            startActivitySafe(DetailActivity.class);
                         }
                     });
                 }
