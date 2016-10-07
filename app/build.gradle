@@ -13,7 +13,7 @@ android {
     }
     signingConfigs {
         releaseConfig {
-            storeFile file("F:\\Work\\AndroidProjects\\PhienDich\\key\\key")
+            storeFile file("D:\\PhongTran\\PHP\\KinhThanhChoMoiNguoi\\Nhan\\Android\\PhienDich\\key")
             storePassword "ntn@123"
             keyAlias "ntn"
             keyPassword "ntn@123"
