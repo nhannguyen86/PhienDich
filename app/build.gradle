@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "vn.nhan.phiendich"
-        minSdkVersion 10
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -41,5 +41,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.google.code.gson:gson:2.2.2'
+    compile 'com.paypal.sdk:paypal-android-sdk:2.15.0'
     testCompile 'junit:junit:4.12'
 }

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
@@ -99,7 +100,9 @@ public class BaseActive extends AppCompatActivity {
         f.setAccessible(true);
         ImageView nav = (ImageView) f.get(tb);
         int navW = nav.getDrawable().getMinimumWidth();
-        navW += nav.getMinimumWidth() * 2;
+        if (Build.VERSION.SDK_INT >= 16) {
+            navW += nav.getMinimumWidth() * 2;
+        }
         DisplayMetrics metrics = getResources().getDisplayMetrics();
 
         Toolbar.LayoutParams txvPars = (Toolbar.LayoutParams) title.getLayoutParams();
@@ -170,7 +173,7 @@ public class BaseActive extends AppCompatActivity {
             return;
         }
         newActive = true;
-        new AsyncTask<Void, Void, BaseModel>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -178,15 +181,15 @@ public class BaseActive extends AppCompatActivity {
             }
 
             @Override
-            protected BaseModel doInBackground(Void... params) {
+            protected Void doInBackground(Void... params) {
                 Intent i = new Intent(BaseActive.this, type);
                 startActivity(i);
                 return null;
             }
 
             @Override
-            protected void onPostExecute(BaseModel model) {
-                super.onPostExecute(model);
+            protected void onPostExecute(Void re) {
+                super.onPostExecute(re);
                 showLoading(false);
                 newActive = false;
             }
@@ -198,7 +201,7 @@ public class BaseActive extends AppCompatActivity {
             return;
         }
         newActive = true;
-        new AsyncTask<Void, Void, BaseModel>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -206,14 +209,14 @@ public class BaseActive extends AppCompatActivity {
             }
 
             @Override
-            protected BaseModel doInBackground(Void... params) {
+            protected Void doInBackground(Void... params) {
                 Intent i = new Intent(BaseActive.this, type);
                 startActivityForResult(i, requestCode);
                 return null;
             }
 
             @Override
-            protected void onPostExecute(BaseModel model) {
+            protected void onPostExecute(Void model) {
                 super.onPostExecute(model);
                 showLoading(false);
                 newActive = false;

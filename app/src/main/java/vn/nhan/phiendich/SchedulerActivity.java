@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,9 @@ public class SchedulerActivity extends BaseActive {
     private static boolean isScheduler = false;
     private boolean loading = false;// fixed bug of android 4.x
 
+    public static void setScheduler(SchedulerModel schedulerModel) {
+        SchedulerActivity.schedulerModel = schedulerModel;
+    }
     public static void selectScheduler(boolean isScheduler) {
         if (SchedulerActivity.isScheduler != isScheduler) {
             SchedulerActivity.isScheduler = isScheduler;
@@ -116,7 +120,7 @@ public class SchedulerActivity extends BaseActive {
                     tv.setText(sch.details[j].typename);
                     menu.addView(view);
                     if (j == sch.details.length - 1) {
-                        view.setBackground(null);
+                        view.setBackgroundColor(Color.TRANSPARENT);
                     }
                     final Detail m = sch.details[j];
                     tv.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +132,56 @@ public class SchedulerActivity extends BaseActive {
                     });
                 }
             }
+            View save = mInflater.inflate(R.layout.save_scheduler, null);
+            layout.addView(save);
+            Button s = (Button) save.findViewById(R.id.save_scheduler),
+                    l = (Button) save.findViewById(R.id.list_scheduler);
+            s.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!AppManager.isDonated()) {
+                        Utils.makeText(getString(R.string.not_donated));
+                        return;
+                    }
+                    new AsyncTask<Void, Void, Boolean>() {
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            showLoading(true);
+                        }
+
+                        @Override
+                        protected Boolean doInBackground(Void... params) {
+
+                            return AppManager.getDataBaseManager().saveScheduler(schedulerModel, isScheduler);
+                        }
+
+                        @Override
+                        protected void onPostExecute(Boolean re) {
+                            super.onPostExecute(re);
+                            showLoading(false);
+                            if (re) {
+                                Utils.makeText(getString(R.string.save_success));
+                            }
+                        }
+                    }.execute();
+                }
+            });
+            l.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!AppManager.isDonated()) {
+                        Utils.makeText(getString(R.string.not_donated));
+                        return;
+                    }
+                    HistoryActivity.selectScheduler(isScheduler);
+                    startActivitySafe(HistoryActivity.class);
+                }
+            });
+            if (!isScheduler) {
+                l.setText("Các Bài Đọc Đã Lưu");
+            }
+
         } else {
             TextView title = new TextView(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

@@ -13,7 +13,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
@@ -44,35 +46,31 @@ public class WebserviceHelper {
     private static final String READING = HOST + "api/ktcgk/get_bdtl/";
     private static final String ONLINE = HOST + "api/user/get_count_user_online/";
     private static final String OFFLINE = HOST + "api/user/notify_off/";
+    private static final String DONATE = HOST + "api/user/donate/";
 
     private static final String TAG = WebserviceHelper.class.getName();
     private static final Gson GS = new Gson();
 
-    private static String callWS(String url, String[][] params) {
-        try {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpGet request = new HttpGet();
-            if (params != null) {
-                String p = null;
-                for (String[] param: params) {
-                    if (p == null) {
-                        p = "?";
-                    } else {
-                        p += "&";
-                    }
-                    p += param[0] + "=" + URLEncoder.encode(param[1], "UTF-8").replaceAll("\\+", "%20");
+    private static String callWS(String url, String[][] params) throws IOException, URISyntaxException {
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpGet request = new HttpGet();
+        if (params != null) {
+            String p = null;
+            for (String[] param: params) {
+                if (p == null) {
+                    p = "?";
+                } else {
+                    p += "&";
                 }
-                url += p;
+                p += param[0] + "=" + URLEncoder.encode(param[1], "UTF-8").replaceAll("\\+", "%20");
             }
-            request.setHeader("Content-Type", "text/plain; charset=utf-8");
-            request.setURI(new URI(url));
-            HttpResponse response = httpClient.execute(request);
-            HttpEntity entity = response.getEntity();
-            return EntityUtils.toString(entity);
-        } catch (Exception e) {
-            Log.e(TAG, "callWS: " + e.getMessage(), e);
+            url += p;
         }
-        return null;
+        request.setHeader("Content-Type", "text/plain; charset=utf-8");
+        request.setURI(new URI(url));
+        HttpResponse response = httpClient.execute(request);
+        HttpEntity entity = response.getEntity();
+        return EntityUtils.toString(entity);
     }
 
     private static String callPostWS(String link, String json) {
@@ -98,18 +96,22 @@ public class WebserviceHelper {
     }
 
     private static <T extends BaseModel> T parseData(String url, String[][] params, Class<T> classOfT) {
-        String str = callWS(url, params);
-        if (str == null) {
-            return null;
-        }
         try {
+            String str = callWS(url, params);
+            if (str == null) {
+                return null;
+            }
             BaseModel re = GS.fromJson(str, classOfT);
             if (re.error != null) {
                 Utils.makeText(re.error);
             }
             return (T) re;
         } catch (Exception e) {
-            Log.e(TAG, "parseData: " + e.getMessage(), e);
+            if (e instanceof IOException) {
+                Utils.makeText("Không thể kết nối tới máy chủ. Kiểm tra wifi hoặc 3g.");
+            } else {
+                Log.e(TAG, "parseData: " + e.getMessage(), e);
+            }
             return null;
         }
     }
@@ -167,12 +169,22 @@ public class WebserviceHelper {
                         new String[] {"imei", imei} },
                 OnlineModel.class);
     }
+
     public static BaseModel offline(String imei) {
         if (imei == null) {
             return null;
         }
         return parseData(OFFLINE, new String[][]{
                         new String[] {"imei", imei} },
+                BaseModel.class);
+    }
+
+    public static BaseModel donate(long userId, String account, String amount, String respones) {
+        return parseData(DONATE, new String[][]{
+                        new String[] {"user_id", String.valueOf(userId)},
+                        new String[] {"account", account},
+                        new String[] {"amount", amount},
+                        new String[] {"responsePaypal", respones}},
                 BaseModel.class);
     }
 

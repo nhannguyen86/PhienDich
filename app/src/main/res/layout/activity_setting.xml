@@ -11,10 +11,7 @@
     tools:context="vn.nhan.phiendich.SettingActivity">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:fillViewport="true"
-        android:clipToPadding="true">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -30,9 +27,9 @@
                 android:id="@+id/textView2"
                 android:fontFamily="serif" />
 
-            <ListView
+            <vn.nhan.phiendich.utils.ExpandableHeightListView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/font_list"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="4dp"

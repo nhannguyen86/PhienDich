@@ -36,13 +36,7 @@ public class IntroduceActivity extends BaseActive {
         kpv.setOnClickListener(onClick);
         bdtl.setOnClickListener(onClick);
 
-        setContent(0);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus && contentModel == null) {
+        if (contentModel == null) {
             new AsyncTask<Void, Void, MultiContentModel>() {
                 @Override
                 protected void onPreExecute() {
@@ -52,7 +46,14 @@ public class IntroduceActivity extends BaseActive {
 
                 @Override
                 protected MultiContentModel doInBackground(Void... params) {
-                    contentModel = WebserviceHelper.getIntroduce();
+                    if (AppManager.isOfflineMode()) {
+                        contentModel = AppManager.getDataBaseManager().getIntroduce();
+                    } else {
+                        contentModel = WebserviceHelper.getIntroduce();
+                        if (contentModel != null) {
+                            AppManager.getDataBaseManager().saveIntroduce(contentModel);
+                        }
+                    }
                     return contentModel;
                 }
 
@@ -63,12 +64,15 @@ public class IntroduceActivity extends BaseActive {
                     showLoading(false);
                 }
             }.execute();
+        } else {
+            setContent(0);
         }
     }
 
     private void setContent(int index) {
         if (contentModel != null && contentModel.data != null && contentModel.data.length > index) {
-            String c = String.format("<div>%s</div>", contentModel.data[index].content);
+            String c = String.format("<html><body>%s</body></html>", contentModel.data[index].content);
+//            content.loadDataWithBaseURL(null, c, "text/html; charset=utf-8", "UTF-8", null);
             content.loadData(c, "text/html; charset=utf-8", "UTF-8");
             content.loadData(c, "text/html; charset=utf-8", "UTF-8");
         }

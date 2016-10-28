@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Nhan on 3/10/2016.
  */
 public class Detail {
-    public long id;
+    public int id;
     public String content;
     public String title;
     public String typename;

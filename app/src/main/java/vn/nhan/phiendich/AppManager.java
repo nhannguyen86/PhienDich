@@ -11,6 +11,8 @@ import java.util.Date;
 
 import vn.nhan.phiendich.model.AuthenticationModel;
 import vn.nhan.phiendich.model.BaseModel;
+import vn.nhan.phiendich.utils.DataBaseManager;
+import vn.nhan.phiendich.utils.Utils;
 
 /**
  * Created by Nhan on 26/9/2016.
@@ -19,11 +21,13 @@ import vn.nhan.phiendich.model.BaseModel;
 public class AppManager {
     private static final String FONT_SIZE = "vn.nhan.phiendich.FontSize";
     private static final String AUTHENTICATION = "vn.nhan.phiendich.Authentication";
-    private static final Gson GS = new Gson();
+    public static final Gson GS = new Gson();
     public static Activity sharedPreferencesActive;
     public static AuthenticationModel authenModel;
     public static String IMEI;
     public static int ONLINE_COUNT;
+    private static boolean OFFLINE_MODE;
+    private static DataBaseManager dataBaseManager;
 
 
     public static Date selectedDate = new Date();
@@ -45,19 +49,43 @@ public class AppManager {
             return;
         }
         sharedPreferencesActive = activity;
+        // init font size
         SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
         fontSize = sharedPref.getInt(FONT_SIZE, fontSize);
+        // load login
         String auth = sharedPref.getString(AUTHENTICATION, null);
         if (auth != null) {
             authenModel = GS.fromJson(auth, AuthenticationModel.class);
         }
+        // get IMEI
         TelephonyManager mTelephonyMgr = (TelephonyManager) activity
                 .getSystemService(Context.TELEPHONY_SERVICE);
         IMEI = mTelephonyMgr.getDeviceId();
+
+        // check offline mode
+        OFFLINE_MODE = /*true;//*/!Utils.internetAvailable();
+
+        // init DB
+        dataBaseManager = new DataBaseManager(activity);
+    }
+
+    public static DataBaseManager getDataBaseManager() {
+        return dataBaseManager;
+    }
+
+    public static boolean isOfflineMode() {
+        return OFFLINE_MODE;
     }
 
     public static boolean loginSuccess() {
-        return authenModel != null && authenModel.status.equals(BaseModel.STATUS_OK);
+        return authenModel != null && authenModel.status.equals(BaseModel.STATUS_OK) && authenModel.error == null;
+    }
+
+    public static boolean isDonated() {
+        if (!loginSuccess()) {
+            return false;
+        }
+        return authenModel.isDonated;
     }
 
     public static void logout() {

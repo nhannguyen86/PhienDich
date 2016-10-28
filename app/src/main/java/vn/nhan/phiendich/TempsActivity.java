@@ -31,13 +31,20 @@ public class TempsActivity extends BaseActive {
 
                 @Override
                 protected MultiContentModel doInBackground(Void... params) {
-                    return WebserviceHelper.getTemps();
+                    if (AppManager.isOfflineMode()) {
+                        contentModel = AppManager.getDataBaseManager().getTemps();
+                    } else {
+                        contentModel = WebserviceHelper.getTemps();
+                        if (contentModel != null) {
+                            AppManager.getDataBaseManager().saveTemps(contentModel);
+                        }
+                    }
+                    return contentModel;
                 }
 
                 @Override
                 protected void onPostExecute(MultiContentModel model) {
                     super.onPostExecute(model);
-                    contentModel = model;
 
                     setContent();
 

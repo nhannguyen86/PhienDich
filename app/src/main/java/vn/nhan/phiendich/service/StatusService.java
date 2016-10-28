@@ -26,7 +26,7 @@ public class StatusService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             new StatusLoader().execute();
-            Log.d(getClass().getName(), "StatusService: get status online.");
+            Log.d(getClass().getName(), "get status online.");
         }
     }
 

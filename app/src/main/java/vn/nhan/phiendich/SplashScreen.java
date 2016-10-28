@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -13,16 +14,12 @@ import vn.nhan.phiendich.service.StatusReceiver;
 public class SplashScreen extends Activity {
 
     // Splash screen timer
-    private static int SPLASH_TIME_OUT = 1000;
+    private static int SPLASH_TIME_OUT = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
-        AppManager.initData(this);
-
-        scheduleStatus();
 
         new Handler().postDelayed(new Runnable() {
 
@@ -42,6 +39,19 @@ public class SplashScreen extends Activity {
                 finish();
             }
         }, SPLASH_TIME_OUT);
+
+        // initialize data
+        new AsyncTask<Void, Void, Void>(){
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                AppManager.initData(SplashScreen.this);
+                return null;
+            }
+        }.execute();
+
+        // start online checking
+        scheduleStatus();
     }
 
     private void scheduleStatus() {

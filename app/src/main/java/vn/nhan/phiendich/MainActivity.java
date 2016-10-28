@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -46,6 +47,18 @@ public class MainActivity extends BaseActive {
                 goToScheduler(v);
             }
         });
+        findViewById(R.id.savePhungVu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToHistory(v);
+            }
+        });
+        findViewById(R.id.saveBaiDoc).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToHistory(v);
+            }
+        });
         findViewById(R.id.tvSetting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,9 +83,19 @@ public class MainActivity extends BaseActive {
                 goToLogin(v);
             }
         });
-
-
+        // show login
         checkLogin();
+
+        if (AppManager.isOfflineMode()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(Html.fromHtml("Chương trình không thể kết nối đến máy chủ và sẽ tiếp tục chạy ở chế độ ngoại tuyến. " +
+                    "<br/>Ở chế độ ngoại tuyến, một số chức năng trực tuyến sẽ không thể hoạt động. " +
+                    "<br/>Nếu bạn muốn kết nối vào mạng để sử dụng chương trình ở chế độ trực tuyến, hãy khởi động lại ứng dụng."))
+                    .setTitle("Chế độ ngoại tuyến")
+                    .setPositiveButton("Đóng lại", null);
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     private void checkLogin() {
@@ -83,6 +106,15 @@ public class MainActivity extends BaseActive {
             greeting.setText(R.string.msg_request_login);
             username.setText(R.string.login);
         }
+    }
+
+    public void goToHistory(View view) {
+        if (!AppManager.isDonated()) {
+            Utils.makeText(getString(R.string.not_donated));
+            return;
+        }
+        HistoryActivity.selectScheduler(view.getId() == R.id.savePhungVu);
+        startActivitySafe(HistoryActivity.class);
     }
 
     public void goToScheduler(View view) {

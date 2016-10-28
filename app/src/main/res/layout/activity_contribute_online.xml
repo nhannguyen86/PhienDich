@@ -57,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textAlignment="textStart"
+                        android:layout_gravity="center"
                         android:fontFamily="serif" />
 
                 </LinearLayout>
@@ -85,8 +85,8 @@
                         android:text="Họ và tên lót"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textStart"
+                        android:layout_weight="0.3"
+                        android:layout_gravity="center_vertical"
                         android:fontFamily="serif" />
 
                     <EditText
@@ -94,8 +94,8 @@
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:id="@+id/contribute_online_lastname"
-                        android:hint="Card holder lastname"
-                        android:layout_weight="3"
+                        android:hint="Last name"
+                        android:layout_weight="0.7"
                         android:fontFamily="serif" />
 
                 </TableRow>
@@ -109,8 +109,8 @@
                         android:text="Tên"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textStart"
+                        android:layout_weight="0.3"
+                        android:layout_gravity="center_vertical"
                         android:fontFamily="serif" />
 
                     <EditText
@@ -118,12 +118,12 @@
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:id="@+id/contribute_online_firstname"
-                        android:hint="Card holder firstname"
-                        android:layout_weight="3"
+                        android:hint="First name"
+                        android:layout_weight="0.7"
                         android:fontFamily="serif" />
                 </TableRow>
 
-                <TableRow
+                <!--<TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textAlignment="textStart"
+                        android:layout_gravity="center"
                         android:fontFamily="serif" />
 
                     <EditText
@@ -144,7 +144,7 @@
                         android:layout_weight="3"
                         android:fontFamily="serif"
                         android:inputType="textEmailAddress" />
-                </TableRow>
+                </TableRow>-->
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -155,8 +155,8 @@
                         android:text="Số điện thoại"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textStart"
+                        android:layout_weight="0.3"
+                        android:layout_gravity="center_vertical"
                         android:fontFamily="serif" />
 
                     <EditText
@@ -165,11 +165,11 @@
                         android:inputType="text"
                         android:id="@+id/contribute_online_phone"
                         android:hint="Phone number"
-                        android:layout_weight="3"
+                        android:layout_weight="0.7"
                         android:fontFamily="serif" />
                 </TableRow>
 
-                <TableRow
+                <!--<TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -214,7 +214,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textAlignment="textStart"
+                        android:layout_gravity="center"
                         android:fontFamily="serif"/>
 
                     <EditText
@@ -237,7 +237,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textAlignment="textStart"
+                        android:layout_gravity="center"
                         android:fontFamily="serif" />
 
                     <LinearLayout
@@ -266,7 +266,7 @@
 
                     </LinearLayout>
 
-                </TableRow>
+                </TableRow>-->
 
             </TableLayout>
 

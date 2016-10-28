@@ -1,36 +1,59 @@
 package vn.nhan.phiendich;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import static vn.nhan.phiendich.utils.Utils.*;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigDecimal;
+
+import vn.nhan.phiendich.model.BaseModel;
+import vn.nhan.phiendich.utils.Utils;
+import vn.nhan.phiendich.utils.WebserviceHelper;
+
+import static vn.nhan.phiendich.utils.Utils.isEmpty;
 
 public class ContributeOnlineActivity extends BaseActive {
+
+    private static PayPalConfiguration config = new PayPalConfiguration()
+
+            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
+            // or live (ENVIRONMENT_PRODUCTION)
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+
+            .clientId("ASGECBGVEYxsi98c-0PTL1fSDKh61v7lLhgfZUdD0lIoDi_slXQUHMfeEmePopPEvoUBTRQ6UQn3tLUw");
 
     private Spinner amountSelector;
     private EditText customAmount;
     private View customLayout;
     private TextView description;
-    private TextView email;
+//    private TextView email;
     private TextView firstname;
     private TextView lastname;
     private TextView phone;
-    private TextView cardNumber;
+    /*private TextView cardNumber;
     private TextView pin;
     private Spinner month;
-    private Spinner year;
+    private Spinner year;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +70,12 @@ public class ContributeOnlineActivity extends BaseActive {
 
         lastname = (TextView) findViewById(R.id.contribute_online_lastname);
         firstname = (TextView) findViewById(R.id.contribute_online_firstname);
-        email = (TextView) findViewById(R.id.contribute_online_email);
+//        email = (TextView) findViewById(R.id.contribute_online_email);
         phone = (TextView) findViewById(R.id.contribute_online_phone);
-        cardNumber = (TextView) findViewById(R.id.contribute_online_credit_card);
+        /*cardNumber = (TextView) findViewById(R.id.contribute_online_credit_card);
         pin = (TextView) findViewById(R.id.contribute_online_pin);
         month = (Spinner) findViewById(R.id.contribute_online_month);
-        year = (Spinner) findViewById(R.id.contribute_online_year);
+        year = (Spinner) findViewById(R.id.contribute_online_year);*/
 
         customAmount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -96,7 +119,7 @@ public class ContributeOnlineActivity extends BaseActive {
 
             }
         });
-        List<String> months = new ArrayList<>();
+        /*List<String> months = new ArrayList<>();
         months.add("Chọn tháng");
         for (int i = 1; i < 13; i ++) {
             months.add(String.format("Tháng %s", i));
@@ -108,7 +131,72 @@ public class ContributeOnlineActivity extends BaseActive {
         for (int i = 0; i <= 5; i ++) {
             years.add(String.valueOf(y + i));
         }
-        year.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, years));
+        year.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, years));*/
+
+        Intent intent = new Intent(this, PayPalService.class);
+
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        startService(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            final PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+            if (confirm != null) {
+                new AsyncTask<Void, Void, BaseModel>() {
+                    @Override
+                    protected void onPreExecute() {
+                        showLoading(true);
+                        super.onPreExecute();
+                    }
+
+                    @Override
+                    protected BaseModel doInBackground(Void... params) {
+                        JSONObject js = confirm.toJSONObject();
+                        String amt = ((TextView) customAmount).getText().toString();
+                        long userId = AppManager.loginSuccess() ? AppManager.authenModel.id : 1;
+                        try {
+                            return WebserviceHelper.donate(userId, js.getJSONObject("response").getString("id"), amt, js.toString());
+                        } catch (JSONException e) {
+                            Log.e("payment", "an extremely unlikely failure occurred: ", e);
+                            return null;
+                        }
+                    }
+
+                    @Override
+                    protected void onPostExecute(BaseModel baseModel) {
+                        showLoading(false);
+                        if (baseModel != null) {
+                            if (baseModel.error == null) {
+                                finish();
+                                Utils.makeText("Quý vị đã đóng góp thành công. Xin chân thành cám ơn!");
+                                if (AppManager.loginSuccess()) {
+                                    AppManager.authenModel.isDonated = true;
+                                    AppManager.saveLogin();
+                                }
+                            } else {
+                                Utils.makeText(baseModel.error);
+                            }
+                        }
+                        super.onPostExecute(baseModel);
+                    }
+                }.execute();
+            }
+        }
+        else if (resultCode == Activity.RESULT_CANCELED) {
+            Log.i("paymentExample", "The user canceled.");
+        }
+        else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+            Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+        }
     }
 
     private void selectCustomerAmount() {
@@ -130,6 +218,11 @@ public class ContributeOnlineActivity extends BaseActive {
         if (isEmpty(customAmount)) {
             error = true;
         }
+        String amt = ((TextView) customAmount).getText().toString();
+        if (Integer.parseInt(amt) < 15) {
+            customAmount.setError("Mức thấp nhất là 15$");
+            error = true;
+        }
         if (isEmpty(lastname)) {
             error = true;
         }
@@ -139,6 +232,31 @@ public class ContributeOnlineActivity extends BaseActive {
         if (isEmpty(phone)) {
             error = true;
         }
+        if (error) {
+            return;
+        }
+
+        // PAYMENT_INTENT_SALE will cause the payment to complete immediately.
+        // Change PAYMENT_INTENT_SALE to
+        //   - PAYMENT_INTENT_AUTHORIZE to only authorize payment and capture funds later.
+        //   - PAYMENT_INTENT_ORDER to create a payment for authorization and capture
+        //     later via calls from your server.
+
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(amt), "USD",
+                "Thanh toán trực tuyến số tiền đóng góp",
+                PayPalPayment.PAYMENT_INTENT_SALE);
+
+        Intent intent = new Intent(this, PaymentActivity.class);
+
+        // send the same configuration for restart resiliency
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+
+        startActivityForResult(intent, 0);
+
+
+        /*
         if (isEmpty(cardNumber)) {
             error = true;
         }
@@ -162,7 +280,7 @@ public class ContributeOnlineActivity extends BaseActive {
         }
         if (error) {
             return;
-        }
+        }*/
 
     }
 

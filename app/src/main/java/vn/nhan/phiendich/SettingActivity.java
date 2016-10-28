@@ -9,19 +9,19 @@ import java.util.List;
 
 public class SettingActivity extends BaseActive {
 
-    private ListView font_list;
+    private ListView fontList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_setting);
         super.onCreate(savedInstanceState);
 
-        font_list = (ListView) findViewById(R.id.font_list);
+        fontList = (ListView) findViewById(R.id.font_list);
         List<Integer> fontSizes = new ArrayList<>();
         for (int i = 13; i <= 20; i++) {
             fontSizes.add(i);
         }
-        font_list.setAdapter(new FontAdapter(this, fontSizes));
+        fontList.setAdapter(new FontAdapter(this, fontSizes));
     }
 
     public void rollbackDefault(View view) {
@@ -30,6 +30,6 @@ public class SettingActivity extends BaseActive {
 
     public void changeFontSize(int fontSize) {
         AppManager.changeFontSize(fontSize);
-        ((FontAdapter) font_list.getAdapter()).notifyDataSetChanged();
+        ((FontAdapter) fontList.getAdapter()).notifyDataSetChanged();
     }
 }

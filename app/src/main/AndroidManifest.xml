@@ -58,7 +58,9 @@
         <receiver
             android:name=".service.StatusReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
+
+        <activity android:name=".HistoryActivity" android:label="@string/save"></activity>
     </application>
 
 </manifest>

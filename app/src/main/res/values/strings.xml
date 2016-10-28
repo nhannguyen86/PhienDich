@@ -49,6 +49,8 @@
     <string name="mgs_exist">Bạn muốn thoát ứng dụng không?</string>
     <string name="msg_request_login">"Vui lòng đăng nhập.&#160;"</string>
     <string name="error_login">Lỗi khi đăng nhập: %1$s</string>
+    <string name="not_donated">Bạn chưa đóng góp</string>
+    <string name="save_success">Đã lưu lại thành công</string>
     <string-array name="contribute_type">
         <item>$ 15.00</item>
         <item>$ 25.00</item>

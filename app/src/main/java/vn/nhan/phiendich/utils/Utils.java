@@ -10,6 +10,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -28,7 +31,18 @@ public class Utils {
         if (date == null) {
             return "";
         }
-        return  sdf.format(date);
+        return sdf.format(date);
+    }
+
+    public static Date parseDate(String strDate) {
+        if (strDate == null) {
+            return null;
+        }
+        try {
+            return sdf.parse(strDate);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     public static String getContent(InputStream inputStream) {
@@ -49,6 +63,9 @@ public class Utils {
         try {
             Class activityThreadClass = Class.forName("android.app.ActivityThread");
             Object activityThread = activityThreadClass.getMethod("currentActivityThread").invoke(null);
+            if (activityThread == null) {
+                return null;
+            }
             Field activitiesField = activityThreadClass.getDeclaredField("mActivities");
             activitiesField.setAccessible(true);
             Map activities = (Map) activitiesField.get(activityThread);
@@ -128,5 +145,23 @@ public class Utils {
         } else {
             return String.valueOf(num);
         }
+    }
+
+    public static boolean internetAvailable() {
+        try {
+            HttpURLConnection urlConnection = (HttpURLConnection)
+                    (new URL("http://clients3.google.com/generate_204")
+                            .openConnection());
+            urlConnection.setRequestProperty("User-Agent", "Android");
+            urlConnection.setRequestProperty("Connection", "close");
+            urlConnection.setConnectTimeout(1500);
+            urlConnection.connect();
+            if (urlConnection.getResponseCode() == 204 && urlConnection.getContentLength() == 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            Log.e("Network Checker", "Error checking internet connection", e);
+        }
+        return false;
     }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.webkit.WebView;
 
 import vn.nhan.phiendich.model.MultiContentModel;
+import vn.nhan.phiendich.utils.Utils;
 import vn.nhan.phiendich.utils.WebserviceHelper;
 
 public class ContributeActivity extends BaseActive {
@@ -32,7 +33,14 @@ public class ContributeActivity extends BaseActive {
 
                 @Override
                 protected MultiContentModel doInBackground(Void... params) {
-                    contentModel = WebserviceHelper.getContribute();
+                    if (AppManager.isOfflineMode()) {
+                        contentModel = AppManager.getDataBaseManager().getContribute();
+                    } else {
+                        contentModel = WebserviceHelper.getContribute();
+                        if (contentModel != null) {
+                            AppManager.getDataBaseManager().saveContribute(contentModel);
+                        }
+                    }
                     return contentModel;
                 }
 
@@ -61,6 +69,10 @@ public class ContributeActivity extends BaseActive {
     }
 
     public void goToOnlineContribute(View v) {
-        startActivitySafe(ContributeOnlineActivity.class);
+        if (AppManager.loginSuccess()) {
+            startActivitySafe(ContributeOnlineActivity.class);
+        } else {
+            Utils.makeText("Vui lòng đăng nhập.");
+        }
     }
 }
