@@ -72,7 +72,7 @@
                 android:fontFamily="serif"
                 android:layout_marginTop="10dp" />
 
-            <TableLayout
+            <!--<TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -123,7 +123,7 @@
                         android:fontFamily="serif" />
                 </TableRow>
 
-                <!--<TableRow
+                <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -144,7 +144,7 @@
                         android:layout_weight="3"
                         android:fontFamily="serif"
                         android:inputType="textEmailAddress" />
-                </TableRow>-->
+                </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -169,7 +169,7 @@
                         android:fontFamily="serif" />
                 </TableRow>
 
-                <!--<TableRow
+                <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -266,9 +266,9 @@
 
                     </LinearLayout>
 
-                </TableRow>-->
+                </TableRow>
 
-            </TableLayout>
+            </TableLayout>-->
 
             <Button
                 android:layout_width="match_parent"

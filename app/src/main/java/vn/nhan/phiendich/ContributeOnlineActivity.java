@@ -38,19 +38,21 @@ public class ContributeOnlineActivity extends BaseActive {
 
             // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
             // or live (ENVIRONMENT_PRODUCTION)
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .environment(PayPalConfiguration.ENVIRONMENT_PRODUCTION)
 
-            .clientId("ASGECBGVEYxsi98c-0PTL1fSDKh61v7lLhgfZUdD0lIoDi_slXQUHMfeEmePopPEvoUBTRQ6UQn3tLUw");
+            //.clientId("ASGECBGVEYxsi98c-0PTL1fSDKh61v7lLhgfZUdD0lIoDi_slXQUHMfeEmePopPEvoUBTRQ6UQn3tLUw");
+            //.clientId("AcBqVa0YocgtdNonlAb9jUcp6JOvTg5eEZ2cDppkTtEmA1Nq0DS4vltzbvlClW_hup09NE-d0vg_0xYj");
+            .clientId("AXjYUcbeTDYRDNozz02y0DkWz6-fkwbnoBCyGcSSVeBzOwf_NBt4c2GoRC9pjEOl8PUb-EwUHk9bRHwH");
 
     private Spinner amountSelector;
     private EditText customAmount;
     private View customLayout;
     private TextView description;
-//    private TextView email;
+    /*private TextView email;
     private TextView firstname;
     private TextView lastname;
     private TextView phone;
-    /*private TextView cardNumber;
+    private TextView cardNumber;
     private TextView pin;
     private Spinner month;
     private Spinner year;*/
@@ -68,11 +70,11 @@ public class ContributeOnlineActivity extends BaseActive {
         customAmount = (EditText) findViewById(R.id.contribute_online_custom_amount);
         description = (TextView) findViewById(R.id.contribute_online_description);
 
-        lastname = (TextView) findViewById(R.id.contribute_online_lastname);
+        /*lastname = (TextView) findViewById(R.id.contribute_online_lastname);
         firstname = (TextView) findViewById(R.id.contribute_online_firstname);
-//        email = (TextView) findViewById(R.id.contribute_online_email);
+        email = (TextView) findViewById(R.id.contribute_online_email);
         phone = (TextView) findViewById(R.id.contribute_online_phone);
-        /*cardNumber = (TextView) findViewById(R.id.contribute_online_credit_card);
+        cardNumber = (TextView) findViewById(R.id.contribute_online_credit_card);
         pin = (TextView) findViewById(R.id.contribute_online_pin);
         month = (Spinner) findViewById(R.id.contribute_online_month);
         year = (Spinner) findViewById(R.id.contribute_online_year);*/
@@ -223,7 +225,7 @@ public class ContributeOnlineActivity extends BaseActive {
             customAmount.setError("Mức thấp nhất là 15$");
             error = true;
         }
-        if (isEmpty(lastname)) {
+        /*if (isEmpty(lastname)) {
             error = true;
         }
         if (isEmpty(firstname)) {
@@ -231,7 +233,7 @@ public class ContributeOnlineActivity extends BaseActive {
         }
         if (isEmpty(phone)) {
             error = true;
-        }
+        }*/
         if (error) {
             return;
         }

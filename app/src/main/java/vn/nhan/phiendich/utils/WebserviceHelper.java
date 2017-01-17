@@ -34,7 +34,7 @@ import vn.nhan.phiendich.model.SchedulerModel;
  */
 
 public class WebserviceHelper {
-    private static final String HOST = "http://www.leolink.com.vn/";
+    private static final String HOST = "http://web.ktcgk.org/";
     private static final String INTRODUCE = HOST + "api/ktcgk/get_page/?code=GT";
     private static final String TEMPS = HOST + "api/ktcgk/get_page/?code=DKSD";
     private static final String CONTRIBUTE = HOST + "api/ktcgk/get_page/?code=TBDG";
@@ -62,7 +62,7 @@ public class WebserviceHelper {
                 } else {
                     p += "&";
                 }
-                p += param[0] + "=" + URLEncoder.encode(param[1], "UTF-8").replaceAll("\\+", "%20");
+                p += param[0] + "=" + ( param[1] != null ? URLEncoder.encode(param[1], "UTF-8").replaceAll("\\+", "%20") : "" );
             }
             url += p;
         }

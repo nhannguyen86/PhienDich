@@ -95,7 +95,11 @@ public class Utils {
             cur.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(cur, mgs, Toast.LENGTH_LONG).show();
+                    if (cur == null) {
+                        Toast.makeText(AppManager.sharedPreferencesActive, mgs, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(cur, mgs, Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }

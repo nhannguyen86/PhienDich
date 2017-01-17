@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class AuthenticationModel extends BaseModel {
     public long id;
     public String username;
+    public String pass;
     public String email;
     public String displayname;
     public String firstname;

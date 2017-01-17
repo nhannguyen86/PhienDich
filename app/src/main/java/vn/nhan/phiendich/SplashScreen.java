@@ -21,6 +21,19 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        // initialize data
+        new AsyncTask<Void, Void, Void>(){
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                AppManager.initData(SplashScreen.this);
+                return null;
+            }
+        }.execute();
+
+        // start online checking
+        scheduleStatus();
+
         new Handler().postDelayed(new Runnable() {
 
             /*
@@ -39,19 +52,6 @@ public class SplashScreen extends Activity {
                 finish();
             }
         }, SPLASH_TIME_OUT);
-
-        // initialize data
-        new AsyncTask<Void, Void, Void>(){
-
-            @Override
-            protected Void doInBackground(Void... params) {
-                AppManager.initData(SplashScreen.this);
-                return null;
-            }
-        }.execute();
-
-        // start online checking
-        scheduleStatus();
     }
 
     private void scheduleStatus() {

@@ -50,6 +50,7 @@ public class LoginActivity extends BaseActive {
             @Override
             protected AuthenticationModel doInBackground(Void... params) {
                 AppManager.authenModel = WebserviceHelper.getLogin(user, pass);
+                AppManager.authenModel.pass = pass;
                 return AppManager.authenModel;
             }
 

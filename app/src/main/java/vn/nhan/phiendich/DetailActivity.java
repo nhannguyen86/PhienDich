@@ -98,7 +98,7 @@ public class DetailActivity extends BaseActive {
             );
 
             // set audio bar
-            if (model.audioFile != null) {
+            if (model.audioFile != null && !model.audioFile.isEmpty()) {
                 audioPanel.setVisibility(View.VISIBLE);
                 initPlayMedia();
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -122,12 +122,11 @@ public class DetailActivity extends BaseActive {
                     }
                 });
             } else {
-                audioPanel.setVisibility(View.INVISIBLE);
                 audioPanel.setVisibility(View.GONE);
             }
 
             // set content
-            String c = String.format("<div align=center>%s</div>", model.content);
+            String c = String.format("<div align=center style='font-size:%spx'>%s</div>", AppManager.fontSize, model.content);
             content.loadData(c, "text/html; charset=utf-8", "UTF-8");
         }
     }
@@ -221,6 +220,13 @@ public class DetailActivity extends BaseActive {
 
     private Runnable webScroll = new Runnable() {
         public void run() {
+            if (finalTime == 0) {
+                finalTime = mediaPlayer.getDuration();
+                if (finalTime == -1) {
+                    finalTime = Integer.parseInt(model.audioLength) * 1000;
+                }
+                seekBar.setMax((int) finalTime);
+            }
             if (scrollRangeHeight == 0) {
                 scrollRangeHeight = content.getScrollRangeHeight();
             }

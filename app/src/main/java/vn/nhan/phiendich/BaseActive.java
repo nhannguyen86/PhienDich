@@ -25,8 +25,6 @@ import android.widget.TextView;
 import java.lang.reflect.Field;
 import java.util.Calendar;
 
-import vn.nhan.phiendich.model.BaseModel;
-
 /**
  * Created by Nhan on 26/9/2016.
  */
@@ -177,7 +175,7 @@ public class BaseActive extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                showLoading(true);
+//                showLoading(true);
             }
 
             @Override
@@ -190,7 +188,7 @@ public class BaseActive extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void re) {
                 super.onPostExecute(re);
-                showLoading(false);
+//                showLoading(false);
                 newActive = false;
             }
         }.execute();
@@ -205,7 +203,7 @@ public class BaseActive extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                showLoading(true);
+//                showLoading(true);
             }
 
             @Override
@@ -218,7 +216,7 @@ public class BaseActive extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void model) {
                 super.onPostExecute(model);
-                showLoading(false);
+//                showLoading(false);
                 newActive = false;
             }
         }.execute();
